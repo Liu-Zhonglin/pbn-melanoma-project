@@ -1,0 +1,58 @@
+==========================================================
+ PBN Attractor Landscape Analysis: Responder vs. Non-Responder
+==========================================================
+
+Date Generated: 25-Jun-2025 09:37:28
+
+----------------------------------------
+1. Global Landscape Properties
+----------------------------------------
+Metric                                   | Responder (Sensitive)     | Non-Responder (Resistant)
+--------------------------------------------------------------------------------------------------
+Total Unique Attractors Found            | 22                        | 16                       
+Probability of Most Dominant Attractor   | 12.55                    % | 50.02                    %
+
+
+----------------------------------------
+2. Phenotype Definitions
+----------------------------------------
+Gene Order: AXL, JUN, LOXL2, MAP2K3, MAPK3, NFATC1, NRAS, PIK3CB, RELA, ROR2, TAGLN, WNT5A
+
+Phenotypes are classified based on the state of key IPRES genes:
+ - Sensitive:              AXL=0, WNT5A=0, ROR2=1
+ - Resistant (WNT-Driven): WNT5A=1, ROR2=1
+ - Resistant (AXL-Driven): AXL=1, WNT5A=0, ROR2=1
+
+
+----------------------------------------
+3. Responder Model: Top Attractors
+----------------------------------------
+Prob. (%)  | Size     | Phenotype                 | Key Gene States                | Decimal State(s)
+---------------------------------------------------------------------------------------------------------
+12.55      | 1        | Unclassified              | (AXL=1, WNT5A=0, ROR2=0)       | 2058
+12.53      | 4        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 10,11,26,27
+12.51      | 1        | Resistant (WNT-Driven)    | (AXL=0, WNT5A=1, ROR2=1)       | 13
+12.50      | 1        | Resistant (WNT-Driven)    | (AXL=0, WNT5A=1, ROR2=1)       | 15
+12.49      | 1        | Unclassified              | (AXL=1, WNT5A=0, ROR2=0)       | 2056
+12.48      | 4        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 8,9,24,25
+6.26       | 4        | Resistant (AXL-Driven)    | (AXL=1, WNT5A=0, ROR2=1)       | 2060,2061,2076,2077
+6.24       | 2        | Unclassified              | (AXL=1, WNT5A=1, ROR2=0)       | 2059,2074
+6.24       | 1        | Unclassified              | (AXL=1, WNT5A=1, ROR2=0)       | 2075
+6.23       | 1        | Resistant (WNT-Driven)    | (AXL=1, WNT5A=1, ROR2=1)       | 2063
+
+
+----------------------------------------
+4. Non-Responder Model: Top Attractors
+----------------------------------------
+Prob. (%)  | Size     | Phenotype                 | Key Gene States                | Decimal State(s)
+---------------------------------------------------------------------------------------------------------
+50.02      | 1        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 712
+49.98      | 2        | Sensitive                 | (AXL=0, WNT5A=0, ROR2=1)       | 110,184
+49.98      | 1        | Sensitive                 | (AXL=0, WNT5A=0, ROR2=1)       | 124
+49.98      | 1        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 170
+49.98      | 8        | Unclassified              | (AXL=0, WNT5A=1, ROR2=0)       | 41,56,58,109,126,236,252,254
+49.98      | 4        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 42,168,186,238
+49.98      | 1        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 832
+25.01      | 9        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 96,128,320,546,552,576,704,768,776
+25.00      | 2        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 520,704
+6.26       | 2        | Unclassified              | (AXL=0, WNT5A=0, ROR2=0)       | 800,1600

@@ -1,0 +1,568 @@
+{
+  "nodes": {
+    "AXL": {
+      "functions": [
+        {
+          "function": "~JUN & MAP2K3 & ~MAPK3 & ROR2 | ~JUN & MAP2K3 & MAPK3 & ROR2 | JUN & MAP2K3 & ~MAPK3 & ~ROR2",
+          "inputs": [
+            "JUN",
+            "MAP2K3",
+            "MAPK3",
+            "ROR2"
+          ],
+          "mi": 0.29159138480431529,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & MAP2K3 & ~MAPK3 & ROR2 | ~JUN & MAP2K3 & MAPK3 & ROR2 | JUN & MAP2K3 & ~MAPK3 & ~ROR2 | JUN & MAP2K3 & MAPK3 & ROR2",
+          "inputs": [
+            "JUN",
+            "MAP2K3",
+            "MAPK3",
+            "ROR2"
+          ],
+          "mi": 0.29159138480431529,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & MAP2K3 & ~MAPK3 & ROR2 | ~JUN & MAP2K3 & MAPK3 & ROR2 | JUN & MAP2K3 & ~MAPK3 & ~ROR2 | JUN & MAP2K3 & MAPK3 & ~ROR2",
+          "inputs": [
+            "JUN",
+            "MAP2K3",
+            "MAPK3",
+            "ROR2"
+          ],
+          "mi": 0.29159138480431529,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & MAP2K3 & ~MAPK3 & ROR2 | ~JUN & MAP2K3 & MAPK3 & ROR2 | JUN & MAP2K3 & ~MAPK3 & ~ROR2 | JUN & MAP2K3 & MAPK3 & ~ROR2 | JUN & MAP2K3 & MAPK3 & ROR2",
+          "inputs": [
+            "JUN",
+            "MAP2K3",
+            "MAPK3",
+            "ROR2"
+          ],
+          "mi": 0.29159138480431529,
+          "probability": 0.25
+        }
+      ]
+    },
+    "JUN": {
+      "functions": [
+        {
+          "function": "MAP2K3 & NRAS & RELA & LOXL2",
+          "inputs": [
+            "MAP2K3",
+            "NRAS",
+            "RELA",
+            "LOXL2"
+          ],
+          "mi": 1,
+          "probability": 0.25
+        },
+        {
+          "function": "MAP2K3 & NRAS & ~RELA & LOXL2 | MAP2K3 & NRAS & RELA & LOXL2",
+          "inputs": [
+            "MAP2K3",
+            "NRAS",
+            "RELA",
+            "LOXL2"
+          ],
+          "mi": 1,
+          "probability": 0.25
+        },
+        {
+          "function": "MAP2K3 & ~NRAS & RELA & ~LOXL2 | MAP2K3 & NRAS & RELA & LOXL2",
+          "inputs": [
+            "MAP2K3",
+            "NRAS",
+            "RELA",
+            "LOXL2"
+          ],
+          "mi": 1,
+          "probability": 0.25
+        },
+        {
+          "function": "MAP2K3 & ~NRAS & RELA & ~LOXL2 | MAP2K3 & NRAS & ~RELA & LOXL2 | MAP2K3 & NRAS & RELA & LOXL2",
+          "inputs": [
+            "MAP2K3",
+            "NRAS",
+            "RELA",
+            "LOXL2"
+          ],
+          "mi": 1,
+          "probability": 0.25
+        }
+      ]
+    },
+    "LOXL2": {
+      "functions": [
+        {
+          "function": "~JUN & MAP2K3",
+          "inputs": [
+            "JUN",
+            "MAP2K3"
+          ],
+          "mi": 0.41507127766752966,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & MAP2K3 | JUN & ~MAP2K3",
+          "inputs": [
+            "JUN",
+            "MAP2K3"
+          ],
+          "mi": 0.41507127766752966,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~MAP2K3 | JUN & MAP2K3",
+          "inputs": [
+            "JUN",
+            "MAP2K3"
+          ],
+          "mi": 0.41507127766752966,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~MAP2K3 | JUN & ~MAP2K3 | JUN & MAP2K3",
+          "inputs": [
+            "JUN",
+            "MAP2K3"
+          ],
+          "mi": 0.41507127766752966,
+          "probability": 0.25
+        }
+      ]
+    },
+    "MAP2K3": {
+      "functions": [
+        {
+          "function": "LOXL2 & ~MAPK3 & ~RELA & ~NRAS | LOXL2 & MAPK3 & RELA & NRAS",
+          "inputs": [
+            "LOXL2",
+            "MAPK3",
+            "RELA",
+            "NRAS"
+          ],
+          "mi": 0.64682147743233365,
+          "probability": 0.25
+        },
+        {
+          "function": "LOXL2 & ~MAPK3 & ~RELA & ~NRAS | LOXL2 & MAPK3 & ~RELA & NRAS | LOXL2 & MAPK3 & RELA & NRAS",
+          "inputs": [
+            "LOXL2",
+            "MAPK3",
+            "RELA",
+            "NRAS"
+          ],
+          "mi": 0.64682147743233365,
+          "probability": 0.25
+        },
+        {
+          "function": "LOXL2 & ~MAPK3 & ~RELA & ~NRAS | LOXL2 & MAPK3 & ~RELA & ~NRAS | LOXL2 & MAPK3 & RELA & NRAS",
+          "inputs": [
+            "LOXL2",
+            "MAPK3",
+            "RELA",
+            "NRAS"
+          ],
+          "mi": 0.64682147743233365,
+          "probability": 0.25
+        },
+        {
+          "function": "LOXL2 & ~MAPK3 & ~RELA & ~NRAS | LOXL2 & MAPK3 & ~RELA & ~NRAS | LOXL2 & MAPK3 & ~RELA & NRAS | LOXL2 & MAPK3 & RELA & NRAS",
+          "inputs": [
+            "LOXL2",
+            "MAPK3",
+            "RELA",
+            "NRAS"
+          ],
+          "mi": 0.64682147743233365,
+          "probability": 0.25
+        }
+      ]
+    },
+    "MAPK3": {
+      "functions": [
+        {
+          "function": "RELA & ~NRAS & LOXL2 & ~PIK3CB | RELA & NRAS & ~LOXL2 & ~PIK3CB | RELA & NRAS & LOXL2 & ~PIK3CB",
+          "inputs": [
+            "RELA",
+            "NRAS",
+            "LOXL2",
+            "PIK3CB"
+          ],
+          "mi": 0.41507127766752966,
+          "probability": 0.25
+        },
+        {
+          "function": "RELA & ~NRAS & LOXL2 & ~PIK3CB | RELA & ~NRAS & LOXL2 & PIK3CB | RELA & NRAS & ~LOXL2 & ~PIK3CB | RELA & NRAS & LOXL2 & ~PIK3CB",
+          "inputs": [
+            "RELA",
+            "NRAS",
+            "LOXL2",
+            "PIK3CB"
+          ],
+          "mi": 0.41507127766752966,
+          "probability": 0.25
+        },
+        {
+          "function": "RELA & ~NRAS & ~LOXL2 & PIK3CB | RELA & ~NRAS & LOXL2 & ~PIK3CB | RELA & NRAS & ~LOXL2 & ~PIK3CB | RELA & NRAS & LOXL2 & ~PIK3CB",
+          "inputs": [
+            "RELA",
+            "NRAS",
+            "LOXL2",
+            "PIK3CB"
+          ],
+          "mi": 0.41507127766752966,
+          "probability": 0.25
+        },
+        {
+          "function": "RELA & ~NRAS & ~LOXL2 & PIK3CB | RELA & ~NRAS & LOXL2 & ~PIK3CB | RELA & ~NRAS & LOXL2 & PIK3CB | RELA & NRAS & ~LOXL2 & ~PIK3CB | RELA & NRAS & LOXL2 & ~PIK3CB",
+          "inputs": [
+            "RELA",
+            "NRAS",
+            "LOXL2",
+            "PIK3CB"
+          ],
+          "mi": 0.41507127766752966,
+          "probability": 0.25
+        }
+      ]
+    },
+    "NFATC1": {
+      "functions": [
+        {
+          "function": "~RELA & ~JUN & ~TAGLN & MAP2K3 | ~RELA & ~JUN & TAGLN & ~MAP2K3 | ~RELA & ~JUN & TAGLN & MAP2K3 | RELA & ~JUN & ~TAGLN & ~MAP2K3 | RELA & ~JUN & TAGLN & MAP2K3 | RELA & JUN & ~TAGLN & MAP2K3",
+          "inputs": [
+            "RELA",
+            "JUN",
+            "TAGLN",
+            "MAP2K3"
+          ],
+          "mi": 0.48719717623270176,
+          "probability": 0.25
+        },
+        {
+          "function": "~RELA & ~JUN & ~TAGLN & MAP2K3 | ~RELA & ~JUN & TAGLN & ~MAP2K3 | ~RELA & ~JUN & TAGLN & MAP2K3 | RELA & ~JUN & ~TAGLN & ~MAP2K3 | RELA & ~JUN & TAGLN & MAP2K3 | RELA & JUN & ~TAGLN & MAP2K3 | RELA & JUN & TAGLN & MAP2K3",
+          "inputs": [
+            "RELA",
+            "JUN",
+            "TAGLN",
+            "MAP2K3"
+          ],
+          "mi": 0.48719717623270176,
+          "probability": 0.25
+        },
+        {
+          "function": "~RELA & ~JUN & ~TAGLN & MAP2K3 | ~RELA & ~JUN & TAGLN & ~MAP2K3 | ~RELA & ~JUN & TAGLN & MAP2K3 | RELA & ~JUN & ~TAGLN & ~MAP2K3 | RELA & ~JUN & TAGLN & MAP2K3 | RELA & JUN & ~TAGLN & MAP2K3 | RELA & JUN & TAGLN & ~MAP2K3",
+          "inputs": [
+            "RELA",
+            "JUN",
+            "TAGLN",
+            "MAP2K3"
+          ],
+          "mi": 0.48719717623270176,
+          "probability": 0.25
+        },
+        {
+          "function": "~RELA & ~JUN & ~TAGLN & MAP2K3 | ~RELA & ~JUN & TAGLN & ~MAP2K3 | ~RELA & ~JUN & TAGLN & MAP2K3 | RELA & ~JUN & ~TAGLN & ~MAP2K3 | RELA & ~JUN & TAGLN & MAP2K3 | RELA & JUN & ~TAGLN & MAP2K3 | RELA & JUN & TAGLN & ~MAP2K3 | RELA & JUN & TAGLN & MAP2K3",
+          "inputs": [
+            "RELA",
+            "JUN",
+            "TAGLN",
+            "MAP2K3"
+          ],
+          "mi": 0.48719717623270176,
+          "probability": 0.25
+        }
+      ]
+    },
+    "NRAS": {
+      "functions": [
+        {
+          "function": "~JUN & ~PIK3CB & ~LOXL2 | ~JUN & PIK3CB & ~LOXL2 | JUN & PIK3CB & LOXL2",
+          "inputs": [
+            "JUN",
+            "PIK3CB",
+            "LOXL2"
+          ],
+          "mi": 0.66666666666666663,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~PIK3CB & ~LOXL2 | ~JUN & PIK3CB & ~LOXL2 | JUN & PIK3CB & ~LOXL2 | JUN & PIK3CB & LOXL2",
+          "inputs": [
+            "JUN",
+            "PIK3CB",
+            "LOXL2"
+          ],
+          "mi": 0.66666666666666663,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~PIK3CB & ~LOXL2 | ~JUN & PIK3CB & ~LOXL2 | JUN & ~PIK3CB & LOXL2 | JUN & PIK3CB & LOXL2",
+          "inputs": [
+            "JUN",
+            "PIK3CB",
+            "LOXL2"
+          ],
+          "mi": 0.66666666666666663,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~PIK3CB & ~LOXL2 | ~JUN & PIK3CB & ~LOXL2 | JUN & ~PIK3CB & LOXL2 | JUN & PIK3CB & ~LOXL2 | JUN & PIK3CB & LOXL2",
+          "inputs": [
+            "JUN",
+            "PIK3CB",
+            "LOXL2"
+          ],
+          "mi": 0.66666666666666663,
+          "probability": 0.25
+        }
+      ]
+    },
+    "PIK3CB": {
+      "functions": [
+        {
+          "function": "~WNT5A & RELA & ~AXL & ROR2 | ~WNT5A & RELA & AXL & ~ROR2 | WNT5A & RELA & ~AXL & ~ROR2",
+          "inputs": [
+            "WNT5A",
+            "RELA",
+            "AXL",
+            "ROR2"
+          ],
+          "mi": 0.66831148700469722,
+          "probability": 0.25
+        },
+        {
+          "function": "~WNT5A & RELA & ~AXL & ROR2 | ~WNT5A & RELA & AXL & ~ROR2 | WNT5A & RELA & ~AXL & ~ROR2 | WNT5A & RELA & AXL & ROR2",
+          "inputs": [
+            "WNT5A",
+            "RELA",
+            "AXL",
+            "ROR2"
+          ],
+          "mi": 0.66831148700469722,
+          "probability": 0.25
+        },
+        {
+          "function": "~WNT5A & RELA & ~AXL & ROR2 | ~WNT5A & RELA & AXL & ~ROR2 | WNT5A & RELA & ~AXL & ~ROR2 | WNT5A & RELA & AXL & ~ROR2",
+          "inputs": [
+            "WNT5A",
+            "RELA",
+            "AXL",
+            "ROR2"
+          ],
+          "mi": 0.66831148700469722,
+          "probability": 0.25
+        },
+        {
+          "function": "~WNT5A & RELA & ~AXL & ROR2 | ~WNT5A & RELA & AXL & ~ROR2 | WNT5A & RELA & ~AXL & ~ROR2 | WNT5A & RELA & AXL & ~ROR2 | WNT5A & RELA & AXL & ROR2",
+          "inputs": [
+            "WNT5A",
+            "RELA",
+            "AXL",
+            "ROR2"
+          ],
+          "mi": 0.66831148700469722,
+          "probability": 0.25
+        }
+      ]
+    },
+    "RELA": {
+      "functions": [
+        {
+          "function": "~JUN & ~NRAS & LOXL2 & MAPK3 | ~JUN & NRAS & ~LOXL2 & ~MAPK3 | ~JUN & NRAS & ~LOXL2 & MAPK3 | ~JUN & NRAS & LOXL2 & MAPK3 | JUN & NRAS & LOXL2 & ~MAPK3",
+          "inputs": [
+            "JUN",
+            "NRAS",
+            "LOXL2",
+            "MAPK3"
+          ],
+          "mi": 0.34486608407746433,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~NRAS & LOXL2 & MAPK3 | ~JUN & NRAS & ~LOXL2 & ~MAPK3 | ~JUN & NRAS & ~LOXL2 & MAPK3 | ~JUN & NRAS & LOXL2 & MAPK3 | JUN & NRAS & LOXL2 & ~MAPK3 | JUN & NRAS & LOXL2 & MAPK3",
+          "inputs": [
+            "JUN",
+            "NRAS",
+            "LOXL2",
+            "MAPK3"
+          ],
+          "mi": 0.34486608407746433,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~NRAS & LOXL2 & MAPK3 | ~JUN & NRAS & ~LOXL2 & ~MAPK3 | ~JUN & NRAS & ~LOXL2 & MAPK3 | ~JUN & NRAS & LOXL2 & MAPK3 | JUN & NRAS & ~LOXL2 & MAPK3 | JUN & NRAS & LOXL2 & ~MAPK3",
+          "inputs": [
+            "JUN",
+            "NRAS",
+            "LOXL2",
+            "MAPK3"
+          ],
+          "mi": 0.34486608407746433,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~NRAS & LOXL2 & MAPK3 | ~JUN & NRAS & ~LOXL2 & ~MAPK3 | ~JUN & NRAS & ~LOXL2 & MAPK3 | ~JUN & NRAS & LOXL2 & MAPK3 | JUN & NRAS & ~LOXL2 & MAPK3 | JUN & NRAS & LOXL2 & ~MAPK3 | JUN & NRAS & LOXL2 & MAPK3",
+          "inputs": [
+            "JUN",
+            "NRAS",
+            "LOXL2",
+            "MAPK3"
+          ],
+          "mi": 0.34486608407746433,
+          "probability": 0.25
+        }
+      ]
+    },
+    "ROR2": {
+      "functions": [
+        {
+          "function": "~JUN & ~LOXL2 & ~TAGLN & RELA | JUN & LOXL2 & ~TAGLN & RELA",
+          "inputs": [
+            "JUN",
+            "LOXL2",
+            "TAGLN",
+            "RELA"
+          ],
+          "mi": 0.67243304203873244,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~LOXL2 & ~TAGLN & RELA | JUN & LOXL2 & ~TAGLN & RELA | JUN & LOXL2 & TAGLN & RELA",
+          "inputs": [
+            "JUN",
+            "LOXL2",
+            "TAGLN",
+            "RELA"
+          ],
+          "mi": 0.67243304203873244,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~LOXL2 & ~TAGLN & RELA | JUN & LOXL2 & ~TAGLN & RELA | JUN & LOXL2 & TAGLN & ~RELA",
+          "inputs": [
+            "JUN",
+            "LOXL2",
+            "TAGLN",
+            "RELA"
+          ],
+          "mi": 0.67243304203873244,
+          "probability": 0.25
+        },
+        {
+          "function": "~JUN & ~LOXL2 & ~TAGLN & RELA | JUN & LOXL2 & ~TAGLN & RELA | JUN & LOXL2 & TAGLN & ~RELA | JUN & LOXL2 & TAGLN & RELA",
+          "inputs": [
+            "JUN",
+            "LOXL2",
+            "TAGLN",
+            "RELA"
+          ],
+          "mi": 0.67243304203873244,
+          "probability": 0.25
+        }
+      ]
+    },
+    "TAGLN": {
+      "functions": [
+        {
+          "function": "~LOXL2 & ~JUN & ~RELA & MAPK3 | ~LOXL2 & ~JUN & RELA & MAPK3 | LOXL2 & JUN & RELA & ~MAPK3",
+          "inputs": [
+            "LOXL2",
+            "JUN",
+            "RELA",
+            "MAPK3"
+          ],
+          "mi": 0.27401754212128082,
+          "probability": 0.25
+        },
+        {
+          "function": "~LOXL2 & ~JUN & ~RELA & MAPK3 | ~LOXL2 & ~JUN & RELA & MAPK3 | LOXL2 & JUN & RELA & ~MAPK3 | LOXL2 & JUN & RELA & MAPK3",
+          "inputs": [
+            "LOXL2",
+            "JUN",
+            "RELA",
+            "MAPK3"
+          ],
+          "mi": 0.27401754212128082,
+          "probability": 0.25
+        },
+        {
+          "function": "~LOXL2 & ~JUN & ~RELA & MAPK3 | ~LOXL2 & ~JUN & RELA & MAPK3 | LOXL2 & JUN & ~RELA & MAPK3 | LOXL2 & JUN & RELA & ~MAPK3",
+          "inputs": [
+            "LOXL2",
+            "JUN",
+            "RELA",
+            "MAPK3"
+          ],
+          "mi": 0.27401754212128082,
+          "probability": 0.25
+        },
+        {
+          "function": "~LOXL2 & ~JUN & ~RELA & MAPK3 | ~LOXL2 & ~JUN & RELA & MAPK3 | LOXL2 & JUN & ~RELA & MAPK3 | LOXL2 & JUN & RELA & ~MAPK3 | LOXL2 & JUN & RELA & MAPK3",
+          "inputs": [
+            "LOXL2",
+            "JUN",
+            "RELA",
+            "MAPK3"
+          ],
+          "mi": 0.27401754212128082,
+          "probability": 0.25
+        }
+      ]
+    },
+    "WNT5A": {
+      "functions": [
+        {
+          "function": "~ROR2 & PIK3CB & ~MAPK3 & ~JUN",
+          "inputs": [
+            "ROR2",
+            "PIK3CB",
+            "MAPK3",
+            "JUN"
+          ],
+          "mi": 0.34486608407746433,
+          "probability": 0.25
+        },
+        {
+          "function": "~ROR2 & PIK3CB & ~MAPK3 & ~JUN | ROR2 & PIK3CB & MAPK3 & JUN",
+          "inputs": [
+            "ROR2",
+            "PIK3CB",
+            "MAPK3",
+            "JUN"
+          ],
+          "mi": 0.34486608407746433,
+          "probability": 0.25
+        },
+        {
+          "function": "~ROR2 & PIK3CB & ~MAPK3 & ~JUN | ROR2 & PIK3CB & ~MAPK3 & JUN",
+          "inputs": [
+            "ROR2",
+            "PIK3CB",
+            "MAPK3",
+            "JUN"
+          ],
+          "mi": 0.34486608407746433,
+          "probability": 0.25
+        },
+        {
+          "function": "~ROR2 & PIK3CB & ~MAPK3 & ~JUN | ROR2 & PIK3CB & ~MAPK3 & JUN | ROR2 & PIK3CB & MAPK3 & JUN",
+          "inputs": [
+            "ROR2",
+            "PIK3CB",
+            "MAPK3",
+            "JUN"
+          ],
+          "mi": 0.34486608407746433,
+          "probability": 0.25
+        }
+      ]
+    }
+  }
+}
