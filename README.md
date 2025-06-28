@@ -37,12 +37,12 @@ This project is licensed under the MIT License.
 ---
 
 
-# Core packages for simulation and RL
+## Core packages for simulation and RL
 gymnasium
 stable-baselines3[extra]
 gym-PBN-stac
 
-# Standard data science packages
+## Standard data science packages
 numpy
 pandas
 
