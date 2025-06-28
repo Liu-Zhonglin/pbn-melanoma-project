@@ -16,11 +16,7 @@ This code provides all necessary components to replicate the findings presented 
     * Systematically testing the "hit-and-run" hypothesis by comparing different intervention targets (MAPK3, JUN) and durations (1-step, 2-step).
 
 
-```
 
-## Experimental Pipeline
-
-The primary script, `run_temporal_hypothesis_analysis.py`, encapsulates the complete experimental pipeline. When executed, it first trains a Reinforcement Learning agent (or loads a pre-trained one if available) and then uses this agent to systematically evaluate the four temporal intervention strategies detailed in the paper. Upon completion, it generates the summary (`.txt`) and results (`.csv`) files, which contain the data used to generate Table 1 in the main paper.
 
 ## Environment and Dependencies
 
@@ -49,4 +45,4 @@ gym-PBN-stac
 # Standard data science packages
 numpy
 pandas
-`
+
