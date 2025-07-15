@@ -47,7 +47,6 @@ Innate resistance to anti-PD-1 immunotherapy is a major challenge in metastatic 
 - **PKN&Binarization/**: Prior knowledge network assembly and gene binarization scripts.
 - **PBN Construction/**: Data-driven PBN inference and network logic selection.
 - **Mechanistic_Analysis/**: Attractor and rewiring analysis, phenotype decoding, and results.  
-  *Requires [optPBN toolbox](https://github.com/OptPBN/optPBN) for attractor analysis (Matlab).*
 - **Optimal_Control/**: RL training, SHAP/XAI analysis, robust intervention studies.
 - **figures/**: All figures for publication and exploration.
 - **requirements.txt**: Python dependencies for RL and XAI scripts.
