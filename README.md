@@ -10,7 +10,7 @@ This repository contains the complete source code, models, and reproducible anal
 
 Innate resistance to anti-PD-1 immunotherapy is a major challenge in metastatic melanoma, driven by complex and poorly understood gene regulatory networks. In this project, we:
 
-- **Construct** a dynamic **Probabilistic Boolean Network (PBN)** from patient tumor RNA-seq data ([Hugo et al., Cell 2016](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78220)) to model the regulatory logic governing resistance.
+- **Construct** a dynamic **Probabilistic Boolean Network (PBN)** from patient tumor RNA-seq data ([Hugo et al., Cell 2016](https://pubmed.ncbi.nlm.nih.gov/26997480/)) to model the regulatory logic governing resistance.
 - **Discover** optimal, time-dependent therapeutic interventions using **reinforcement learning (RL)** with Proximal Policy Optimization (PPO).
 - **Explain** the learned strategies and network mechanisms using **explainable AI (XAI)**, specifically SHAP (SHapley Additive exPlanations).
 
