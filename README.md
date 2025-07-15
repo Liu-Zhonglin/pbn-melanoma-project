@@ -1,48 +1,75 @@
 # Optimal Temporal Control of Melanoma Immunotherapy Resistance
 
-This repository contains the complete source code and models for the paper: **"Dynamic Network Analysis and Optimal Control Reveal a ‘Hit-and-Run’ Mechanism to Reverse Immunotherapy Resistance in Melanoma"**.
-
-This work investigates the complex gene regulatory network underlying innate resistance to anti-PD-1 immunotherapy in melanoma. We constructed a Probabilistic Boolean Network (PBN) from patient data and used Reinforcement Learning (RL) to discover novel therapeutic strategies. The central finding is the identification of a **‘hit-and-run’ mechanism**, where a brief, transient inhibition of a key gene (MAPK3 or JUN) is significantly more effective at reversing the resistant phenotype than a longer, sustained intervention.
-
-This code provides all necessary components to replicate the findings presented in the paper.
-
-## Key Features
-
-* **PBN Model**: A 12-gene Probabilistic Boolean Network model of anti-PD-1 resistant melanoma, inferred from patient data (Hugo et al., 2016).
-* **Reinforcement Learning Framework**: An optimal control environment built using `gym-PBN-stac` and `stable-baselines3`.
-* **Optimal Control Scripts**: The repository includes Python scripts that perform the key analyses described in the paper:
-    * Training a PPO agent to control the resistant network.
-    * Validating static knockout strategies.
-    * Systematically testing the "hit-and-run" hypothesis by comparing different intervention targets (MAPK3, JUN) and durations (1-step, 2-step).
-
-
-
-
-## Environment and Dependencies
-
-The analysis was conducted using **Python 3.9+**. All required packages are listed in the `requirements.txt` file.
-
-
-
-## License
-
-This project is licensed under the MIT License.
-
-## Acknowledgments
-
-* This work was inspired by and uses data from the foundational study by **Hugo et al.** (Cell, 2016).
-* The reinforcement learning environment was built using the **gym-PBN-stac** package.
-* The PPO agent was implemented using the **stable-baselines3** library.
+This repository contains the complete source code, models, and reproducible analysis pipelines for  
+**"A PBN-RL-XAI Framework for Discovering a 'Hit-and-Run' Therapeutic Strategy in Melanoma"**  
+([arXiv:2507.10136](https://arxiv.org/abs/2507.10136)), submitted to IEEE BIBM 2025.
 
 ---
 
+## Overview
 
-## Core packages for simulation and RL
-gymnasium
-stable-baselines3[extra]
-gym-PBN-stac
+Innate resistance to anti-PD-1 immunotherapy is a major challenge in metastatic melanoma, driven by complex and poorly understood gene regulatory networks. In this project, we:
 
-## Standard data science packages
-numpy
-pandas
+- **Construct** a dynamic **Probabilistic Boolean Network (PBN)** from patient tumor RNA-seq data ([Hugo et al., Cell 2016](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78220)) to model the regulatory logic governing resistance.
+- **Discover** optimal, time-dependent therapeutic interventions using **reinforcement learning (RL)** with Proximal Policy Optimization (PPO).
+- **Explain** the learned strategies and network mechanisms using **explainable AI (XAI)**, specifically SHAP (SHapley Additive exPlanations).
+
+> **Central finding:**  
+> A precisely timed, 4-step *temporary* inhibition of **LOXL2**—rather than sustained inhibition—efficiently erases the molecular signature of resistance. This "hit-and-run" intervention enables the network to self-correct, achieving over **93% reversal** of resistance in silico.
+
+---
+
+## Key Features
+
+- **PBN Model Construction:**  
+  - Automated pipeline for binarizing RNA-seq data and inferring context-specific PBNs using a hybrid prior-knowledge/data-driven approach.
+  - Core gene selection combines key IPRES genes and data-driven network importance.
+
+- **Network Dynamics & Attractor Analysis:**  
+  - Scripts and tools to analyze attractor landscapes and regulatory rewiring that underpins resistance.
+  - **Note:** The [optPBN toolbox](https://github.com/OptPBN/optPBN) (Matlab) is required for attractor analysis.
+
+- **RL-Based Optimal Control:**  
+  - RL training pipeline (using `gym-PBN-stac` and `stable-baselines3`) for discovering policies that transition the network from resistant to sensitive phenotypes.
+  - Support for both episode-based and transient ("hit-and-run") interventions.
+
+- **Explainable AI Analysis:**  
+  - SHAP-based scripts for interpreting RL agent decisions, including dynamic SHAP trajectory heatmaps and context-dependent vulnerability analysis.
+
+- **Full Reproducibility:**  
+  - All data processing, model inference, training, evaluation, and plotting scripts are included and documented.
+
+---
+
+## Folder Structure
+- **Data_Preprocessing/**: Input data and scripts for normalization and annotation.  
+  *RNA-seq data can be downloaded from GEO accession [GSE78220](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78220).*
+- **PKN&Binarization/**: Prior knowledge network assembly and gene binarization scripts.
+- **PBN Construction/**: Data-driven PBN inference and network logic selection.
+- **Mechanistic_Analysis/**: Attractor and rewiring analysis, phenotype decoding, and results.  
+  *Requires [optPBN toolbox](https://github.com/OptPBN/optPBN) for attractor analysis (Matlab).*
+- **Optimal_Control/**: RL training, SHAP/XAI analysis, robust intervention studies.
+- **figures/**: All figures for publication and exploration.
+- **requirements.txt**: Python dependencies for RL and XAI scripts.
+
+---
+
+## Data Availability
+
+- **RNA-seq data:**  
+  All analyses are based on the dataset from Hugo et al., Cell 2016, available at GEO accession [GSE78220](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78220).
+
+---
+
+## Environment and Dependencies
+
+- **Python 3.9+**
+- **Matlab** (for optPBN attractor analysis)
+- **R** (for some preprocessing and network inference scripts)
+- See `requirements.txt` for all Python dependencies, including:
+    - `gymnasium`
+    - `stable-baselines3[extra]`
+    - `gym-PBN-stac`
+    - `shap`
+    - `scikit-learn`, `numpy`, `pandas`, `matplotlib`, `seaborn`, etc.
 
