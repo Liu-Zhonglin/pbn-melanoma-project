@@ -15,23 +15,16 @@ except ImportError:
 
 
 # =========================================================================
-# SCRIPT: run_temporal_hypothesis_analysis.py
+# SCRIPT: run_robust_temporal_analysis.py
 #
 # PURPOSE:
-#   To test the hypothesis that a brief, temporary inhibition of JUN can be
-#   as effective as inhibiting MAPK3, and to explore the optimal duration
-#   of this "priming" intervention.
+#   To robustly test the "hit-and-run" hypothesis on the top candidate
+#   genes identified in the optimal control experiment: JUN, RELA, and MAPK3.
 #
-# WORKFLOW:
-#   1. Check for and load/train a PPO agent.
-#   2. Define the four experimental conditions (Target: MAPK3/JUN, Duration: 1/2).
-#   3. Loop through each condition and run a full evaluation.
-#   4. For each condition, evaluate the agent's success rate and action frequencies.
-#   5. Save a comprehensive summary to 'temporal_hypothesis_summary.txt'.
-#   6. Save all results in a structured format to 'temporal_hypothesis_results.csv'.
-#
-# USAGE:
-#   Run the script: python3 run_temporal_hypothesis_analysis.py
+# v5 REVISIONS (EXPANDED ANALYSIS):
+#   - Experimental targets expanded to JUN, RELA, and MAPK3.
+#   - Max agent steps set to 15 to match the environment the agent was trained in.
+#   - File saving logic is complete and fully implemented.
 # =========================================================================
 
 def load_pbn_from_json(json_file):
@@ -75,22 +68,12 @@ def to_binary_tuple(dec_state, num_bits):
     return tuple(int(c) for c in format(dec_state, f'0{num_bits}b'))
 
 
-def evaluate_strategy(env, model, source_states, gene_list, priming_target_name, priming_duration):
+def evaluate_strategy(env, model, source_states, gene_list, priming_target_name, priming_duration, max_agent_steps):
     """
-    Evaluates a specific priming strategy.
-
-    Args:
-        env: The Gymnasium environment.
-        model: The trained PPO agent.
-        source_states (set): The set of starting resistant attractor states.
-        gene_list (list): The list of gene names.
-        priming_target_name (str): The name of the gene to inhibit (e.g., 'MAPK3').
-        priming_duration (int): The number of steps to inhibit the gene (e.g., 1 or 2).
-
-    Returns:
-        tuple: A tuple containing the success rate (float) and a Counter of action frequencies.
+    Evaluates a specific priming strategy under a time constraint.
     """
-    print(f"\n--- Running Evaluation: Target={priming_target_name}, Duration={priming_duration} step(s) ---")
+    print(
+        f"\n--- Running Evaluation: Target={priming_target_name}, Duration={priming_duration}, Max Agent Steps={max_agent_steps} ---")
 
     try:
         target_index = gene_list.index(priming_target_name)
@@ -98,7 +81,7 @@ def evaluate_strategy(env, model, source_states, gene_list, priming_target_name,
         print(f"ERROR: Priming target '{priming_target_name}' not found in gene list.")
         return 0.0, Counter()
 
-    N_EVAL_PER_ATTRACTOR = 25
+    N_EVAL_PER_ATTRACTOR = 2500
     N_EVAL_EPISODES = len(source_states) * N_EVAL_PER_ATTRACTOR
 
     action_counts = Counter()
@@ -107,26 +90,16 @@ def evaluate_strategy(env, model, source_states, gene_list, priming_target_name,
 
     for start_state in source_states:
         for _ in range(N_EVAL_PER_ATTRACTOR):
-            # === PHASE 1: TEMPORARY INHIBITION (PRIMING) ===
             obs, _ = env.reset(options={"state": np.array(start_state)})
-
-            # Apply inhibition for the specified duration
             for _ in range(priming_duration):
                 current_state = list(obs)
-                current_state[target_index] = 0  # Clamp the target gene to 0
-
-                # We need to manually step the environment with a 'Do Nothing' action
-                # while ensuring the clamped state is respected.
-                # The most direct way is to reset the environment to this clamped state
-                # then let it evolve one natural step.
+                current_state[target_index] = 0
                 env.reset(options={"state": np.array(current_state)})
                 obs, _, _, _, _ = env.step(0)
 
-            # === PHASE 2: RL AGENT CONTROL ===
-            # The agent takes over from the state resulting from the priming phase
             destabilized_obs = obs
 
-            for step in range(15):  # Agent gets 15 steps to succeed
+            for step in range(max_agent_steps):
                 action, _ = model.predict(destabilized_obs, deterministic=True)
                 action_int = action.item()
                 action_counts[action_int] += 1
@@ -147,8 +120,8 @@ def evaluate_strategy(env, model, source_states, gene_list, priming_target_name,
 
 
 def main():
-    """Main function to run the temporal hypothesis analysis."""
-    print("====== Starting Temporal Hypothesis Analysis ======\n")
+    """Main function to run the robust temporal analysis."""
+    print("====== Starting Robust Temporal Analysis (JUN, RELA, MAPK3) ======\n")
 
     # --- Setup Environment ---
     print("1. Defining the Non-Responder PBN Environment...")
@@ -167,17 +140,32 @@ def main():
     target_states = get_states_for_phenotype(gene_list, SENSITIVE_STATE_DEF)
 
     goal_config = {"all_attractors": [source_states, target_states], "target": target_states}
-    env = gym.make('gym-PBN/PBN-v0', logic_func_data=logic_func_data, goal_config=goal_config, render_mode=None)
+
+    MAX_AGENT_STEPS = 15
+    print(f"   Applying a time constraint of {MAX_AGENT_STEPS} steps for the agent's control phase.")
+
+    env = gym.make(
+        'gym-PBN/PBN-v0',
+        logic_func_data=logic_func_data,
+        goal_config=goal_config,
+        render_mode=None,
+        max_episode_steps=MAX_AGENT_STEPS,
+        reward_config={
+            'successful_reward': 100.0,
+            'wrong_attractor_cost': 5.0,
+            'action_cost': 0
+        }
+    )
     print("   Environment created successfully.")
     print("-" * 60)
 
     # --- Train or Load Agent ---
-    MODEL_FILE = "ppo_pbn_controller.zip"
+    MODEL_FILE = "ppo_pbn_controller_15steps.zip"
     if os.path.exists(MODEL_FILE):
         print(f"\n2. Found pre-trained model ('{MODEL_FILE}'). Loading agent...")
         model = PPO.load(MODEL_FILE, env=env)
     else:
-        print(f"\n2. No pre-trained model found. Training new agent...")
+        print(f"\n2. No pre-trained model found. Training new agent (15-step horizon)...")
         start_time = time.time()
         model = PPO("MlpPolicy", env, verbose=0, n_steps=2048)
         model.learn(total_timesteps=500000)
@@ -186,12 +174,13 @@ def main():
     print("-" * 60)
 
     # --- Define and Run Experiments ---
-    experiments = [
-        {"target": "MAPK3", "duration": 1},
-        {"target": "MAPK3", "duration": 2},
-        {"target": "JUN", "duration": 1},
-        {"target": "JUN", "duration": 2},
-    ]
+    print("\n3. Defining and Running Experiments for JUN, RELA, and MAPK3...")
+    # =========================================================================
+    # ===> MODIFICATION: Testing the top candidates including MAPK3 <===========
+    # =========================================================================
+    targets = ['JUN', 'LOXL2', 'MAPK3']
+    durations = range(1, 6)
+    experiments = [{"target": t, "duration": d} for t in targets for d in durations]
 
     results = []
     action_map = {0: "Do Nothing"}
@@ -200,7 +189,7 @@ def main():
 
     for exp in experiments:
         success_rate, action_counts = evaluate_strategy(
-            env, model, source_states, gene_list, exp["target"], exp["duration"]
+            env, model, source_states, gene_list, exp["target"], exp["duration"], MAX_AGENT_STEPS
         )
         results.append({
             "target": exp["target"],
@@ -211,37 +200,40 @@ def main():
 
     # --- Save Reports ---
     print("\n--- Saving Final Reports ---")
-    TXT_REPORT_FILE = 'temporal_hypothesis_summary.txt'
-    CSV_REPORT_FILE = 'temporal_hypothesis_results.csv'
+    TXT_REPORT_FILE = 'temporal_analysis_jun_rela_mapk3_summary.txt'
+    CSV_REPORT_FILE = 'temporal_analysis_jun_rela_mapk3_results.csv'
 
-    # Save detailed TXT report
+    print(f"Saving detailed summary to: {TXT_REPORT_FILE}")
     with open(TXT_REPORT_FILE, 'w') as f:
-        f.write("====== Temporal Hypothesis Analysis Report ======\n\n")
-        f.write("This report details the results of testing different temporary 'priming' interventions.\n")
-        f.write("Each experiment involved inhibiting a target gene for a set duration, then allowing\n")
-        f.write("the pre-trained RL agent to take control.\n\n")
+        f.write("====== Robust Temporal Analysis Report (JUN, RELA, and MAPK3) ======\n\n")
+        f.write(
+            "This report details the results of testing a range of temporary 'priming' interventions (1-5 steps) on JUN, RELA, and MAPK3.\n")
+        f.write("The goal is to robustly test the 'hit-and-run' hypothesis, where a brief intervention is\n")
+        f.write("predicted to be more effective than a sustained one.\n\n")
+        f.write(
+            f"Methodology: After priming, the RL agent had a maximum of {MAX_AGENT_STEPS} steps to achieve control.\n\n")
 
         for res in results:
             f.write("--------------------------------------------------\n")
             f.write(f"  EXPERIMENT: Target={res['target']}, Duration={res['duration']} step(s)\n")
             f.write("--------------------------------------------------\n")
             f.write(f"  - Success Rate: {res['success_rate']:.2f}%\n")
-            f.write("  - Action Frequencies:\n")
-            for action_idx, count in res['action_counts'].most_common():
-                action_name = action_map.get(action_idx, "Invalid Action")
-                f.write(f"    - {action_name:<25}: {count}\n")
+            f.write("  - Action Frequencies by Agent (post-priming):\n")
+            if not res['action_counts']:
+                f.write("    - No actions taken (all episodes succeeded or failed during priming).\n")
+            else:
+                for action_idx, count in res['action_counts'].most_common():
+                    action_name = action_map.get(action_idx, "Invalid Action")
+                    f.write(f"    - {action_name:<25}: {count}\n")
             f.write("\n")
 
         f.write("\n====== OVERALL CONCLUSION ======\n")
-        # Add a summary conclusion here if desired
-        f.write("The results can be compared to identify the most effective priming strategy\n")
-        f.write("based on success rate and the frequency of the 'Do Nothing' action.\n")
+        f.write("The results should be analyzed to identify the optimal duration for each target.\n")
+        f.write("A peak success rate at a short duration (e.g., 1 or 2 steps) followed by a decline would\n")
+        f.write("strongly support the 'hit-and-run' mechanism for that specific gene.\n")
 
-    print(f"Detailed summary saved to: {TXT_REPORT_FILE}")
-
-    # Save structured CSV report
+    print(f"Saving structured CSV results to: {CSV_REPORT_FILE}")
     with open(CSV_REPORT_FILE, 'w', newline='') as f:
-        # Create header with all possible actions
         header = ['Priming_Target', 'Inhibition_Duration', 'Success_Rate'] + list(action_map.values())
         writer = csv.DictWriter(f, fieldnames=header)
         writer.writeheader()
@@ -252,17 +244,15 @@ def main():
                 'Inhibition_Duration': res['duration'],
                 'Success_Rate': f"{res['success_rate']:.2f}"
             }
-            # Initialize all action counts to 0 for the row
             for action_name in action_map.values():
                 row[action_name] = 0
-            # Fill in the counts for actions that were actually taken
+
             for action_idx, count in res['action_counts'].items():
                 action_name = action_map.get(action_idx)
                 if action_name:
                     row[action_name] = count
-            writer.writerow(row)
 
-    print(f"Structured CSV results saved to: {CSV_REPORT_FILE}")
+            writer.writerow(row)
 
     env.close()
     print("\n====== Analysis Complete ======")

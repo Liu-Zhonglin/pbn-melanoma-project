@@ -15,20 +15,14 @@ except ImportError:
 
 
 # =========================================================================
-# SCRIPT: run_rl_optimal_control_definitive_v2.py
+# SCRIPT: run_rl_optimal_control_revised.py
 #
 # PURPOSE:
 #   To run the definitive, most rigorous version of the control experiment.
 #
-# v12 REVISIONS (MAXIMUM RIGOR):
-#   - Training timesteps set to an exhaustive 500,000.
-#   - Evaluation episodes increased to 100 (25 runs per attractor)
-#     for maximum statistical confidence in the final results.
-#   - This is the final version for the paper.
-#
-# USAGE:
-#   1. Run the script: python3 run_rl_optimal_control_definitive_v2.py
-#   2. This will take a significant amount of time to complete.
+# v6 REVISIONS (COMPLETE & REPRODUCIBLE):
+#   - Set the max_episode_steps constraint to 15.
+#   - File saving logic is now complete and fully implemented for both reports.
 # =========================================================================
 
 def load_pbn_from_json(json_file):
@@ -73,8 +67,8 @@ def to_binary_tuple(dec_state, num_bits):
 
 
 def main():
-    """Main function to run the RL-based control analysis."""
-    print("====== Starting Definitive RL-based Optimal Control Analysis (v2) ======\n")
+    """Main function to run the RL-based control analysis with a time constraint."""
+    print("====== Starting Definitive RL-based Optimal Control Analysis (Time-Constrained) ======\n")
 
     # --- 1. Define and Create the Environment ---
     print("1. Defining the Non-Responder PBN Environment...")
@@ -84,15 +78,12 @@ def main():
     logic_func_data = (gene_list, logic_funcs)
 
     print("   Defining phenotypes based on attractor analysis...")
-
-    # Define Source States from Known, Stable Resistant Attractors
     source_attractor_1 = {to_binary_tuple(712, num_genes)}
     source_attractor_2 = {to_binary_tuple(4076, num_genes)}
     source_attractor_3 = {to_binary_tuple(4078, num_genes)}
     source_attractor_4 = {to_binary_tuple(4014, num_genes)}
     source_states = source_attractor_1.union(source_attractor_2, source_attractor_3, source_attractor_4)
 
-    # Define the target state based on the "Sensitive" phenotype
     SENSITIVE_STATE_DEF = {'AXL': 0, 'WNT5A': 0, 'ROR2': 1}
     target_states = get_states_for_phenotype(gene_list, SENSITIVE_STATE_DEF)
 
@@ -100,31 +91,47 @@ def main():
     print(f"   Found {len(target_states)} target (sensitive) states.")
 
     goal_config = {"all_attractors": [source_states, target_states], "target": target_states}
-    env = gym.make('gym-PBN/PBN-v0', logic_func_data=logic_func_data, goal_config=goal_config, render_mode=None)
+
+    reward_config = {
+        'successful_reward': 100.0,
+        'wrong_attractor_cost': 5.0,
+        'action_cost': 0
+    }
+
+
+
+    MAX_STEPS_PER_EPISODE = 15
+    print(f"   Applying a time constraint of {MAX_STEPS_PER_EPISODE} steps per episode.")
+
+    env = gym.make(
+        'gym-PBN/PBN-v0',
+        logic_func_data=logic_func_data,
+        goal_config=goal_config,
+        render_mode=None,
+        max_episode_steps=MAX_STEPS_PER_EPISODE,
+        reward_config=reward_config
+    )
     print("   Environment created successfully.")
     print("-" * 50)
 
-    # --- 2. Train the RL Agent (Exhaustive Training) ---
+    # --- 2. Train the RL Agent (to be efficient) ---
     print("\n2. Training the Reinforcement Learning Agent (PPO)...")
     start_time = time.time()
     TOTAL_TRAINING_TIMESTEPS = 500000
 
     model = PPO("MlpPolicy", env, verbose=0, n_steps=2048)
     model.learn(total_timesteps=TOTAL_TRAINING_TIMESTEPS)
-    end_time = time.time()
-    print(f"   Training finished in {end_time - start_time:.2f} seconds.")
+    training_time = time.time() - start_time
+    print(f"   Training finished in {training_time:.2f} seconds.")
     print("-" * 50)
 
     # --- 3. Robust Evaluation and Policy Analysis ---
-    print(f"\n3. Evaluating the learned policy...")
+    print(f"\n3. Evaluating the learned policy under the {MAX_STEPS_PER_EPISODE}-step constraint...")
     action_map = {0: "Do Nothing"}
     for i, name in enumerate(gene_list):
         action_map[i + 1] = f"Flip Gene '{name}'"
 
-    # =========================================================================
-    # ===> PARAMETER INCREASED FOR MAXIMUM RIGOR <=============================
-    # =========================================================================
-    N_EVAL_PER_ATTRACTOR = 25
+    N_EVAL_PER_ATTRACTOR = 2500
     N_EVAL_EPISODES = len(source_states) * N_EVAL_PER_ATTRACTOR
 
     action_counts = Counter()
@@ -133,7 +140,7 @@ def main():
     for start_state in source_states:
         for _ in range(N_EVAL_PER_ATTRACTOR):
             obs, info = env.reset(options={"state": np.array(start_state)})
-            for step in range(15):
+            for step in range(MAX_STEPS_PER_EPISODE):
                 action, _states = model.predict(obs, deterministic=True)
                 action_int = action.item()
                 action_counts[action_int] += 1
@@ -147,7 +154,7 @@ def main():
     print("-" * 50)
 
     # --- 4. Report Final Results to Console ---
-    print("\n4. Optimal Control Strategy Results:")
+    print("\n4. Optimal Control Strategy Results (Time-Constrained):")
     success_rate = (success_count / N_EVAL_EPISODES) * 100
     print(f"\n- Agent Success Rate: {success_rate:.1f}%")
     print("\n- Frequency of Actions Chosen by the Agent:")
@@ -156,7 +163,6 @@ def main():
     print("  ------------------------------------------")
 
     reporting_action_counts = action_counts.copy()
-
     for action_idx, count in reporting_action_counts.most_common():
         action_name = action_map.get(action_idx, "Invalid Action")
         print(f"  {action_name:<25} | {count:<15}")
@@ -169,26 +175,30 @@ def main():
         most_common_action_idx = action_counts.most_common(1)[0][0]
         optimal_strategy = action_map.get(most_common_action_idx)
     print("\n- CONCLUSION:")
-    print(f"  >> Most Effective Intervention: {optimal_strategy} <<")
+    print(f"  >> Most Effective Intervention under time constraint: {optimal_strategy} <<")
     print("-" * 50)
 
     # --- 5. SAVE RESULTS TO FILES ---
-    TXT_REPORT_FILE = 'rl_control_report_definitive_v2.txt'
-    CSV_REPORT_FILE = 'rl_action_frequencies_definitive_v2.csv'
+    TXT_REPORT_FILE = 'rl_control_report_15steps_v6.txt'
+    CSV_REPORT_FILE = 'rl_action_frequencies_15steps_v6.csv'
 
+    # =========================================================================
+    # ===> FULLY IMPLEMENTED TXT REPORT SAVING <===============================
+    # =========================================================================
     print(f"\nSaving comprehensive report to: {TXT_REPORT_FILE}")
     with open(TXT_REPORT_FILE, 'w') as f:
-        f.write("====== Definitive Reinforcement Learning Optimal Control Report (v2) ======\n\n")
+        f.write("====== Definitive Reinforcement Learning Optimal Control Report (v6) ======\n\n")
+        f.write("--- METHODOLOGY ---\n")
         f.write(f"Training Timesteps: {TOTAL_TRAINING_TIMESTEPS}\n")
-        f.write(f"Training Time: {end_time - start_time:.2f} seconds\n")
-        f.write(f"Evaluation Episodes: {N_EVAL_EPISODES}\n\n")
+        f.write(f"Training Time: {training_time:.2f} seconds\n")
+        f.write(f"Evaluation Episodes: {N_EVAL_EPISODES}\n")
+        f.write(f"Episode Time Constraint: {MAX_STEPS_PER_EPISODE} steps\n\n")
         f.write("--- STARTING CONDITIONS ---\n")
         f.write(f"Source States: {len(source_states)} specific attractor states confirmed as resistant.\n")
-        f.write(f"Target Phenotype: (AXL=0, WNT5A=0, ROR2=1)\n\n")
+        f.write(f"Target Phenotype: {SENSITIVE_STATE_DEF}\n\n")
         f.write("--- RESULTS ---\n")
         f.write(f"Agent Success Rate: {success_rate:.1f}%\n")
-        f.write(
-            f"(Successfully drove the network to a sensitive state in {success_count} out of {N_EVAL_EPISODES} trials)\n\n")
+        f.write(f"(Successfully drove the network to a sensitive state in {success_count} out of {N_EVAL_EPISODES} trials)\n\n")
         f.write("Frequency of Actions Chosen by the Agent:\n")
         f.write("------------------------------------------\n")
         f.write(f"{'Action':<25} | {'Times Chosen':<15}\n")
@@ -198,14 +208,18 @@ def main():
             f.write(f"{action_name:<25} | {count:<15}\n")
         f.write("------------------------------------------\n\n")
         f.write("--- CONCLUSION ---\n")
-        f.write(f"When forced to find an active intervention to escape stable attractors,\n")
-        f.write(f"the agent's learned optimal policy is to consistently intervene on a single gene.\n")
-        f.write(f">> Most Effective Intervention: {optimal_strategy}\n")
+        f.write("When forced to find an active intervention to escape stable attractors under a time constraint,\n")
+        f.write("the agent's learned optimal policy is to consistently intervene on a specific gene.\n")
+        f.write(f">> Most Effective Intervention: {optimal_strategy} <<\n")
 
-    print(f"Saving action frequency data to: {CSV_REPORT_FILE}")
+    # =========================================================================
+    # ===> FULLY IMPLEMENTED CSV REPORT SAVING <===============================
+    # =========================================================================
+    print(f"Saving structured action frequencies to: {CSV_REPORT_FILE}")
     with open(CSV_REPORT_FILE, 'w', newline='') as f:
+        header = ['Action', 'Times_Chosen']
         writer = csv.writer(f)
-        writer.writerow(['Action', 'Times Chosen'])
+        writer.writerow(header)
         for action_idx, count in reporting_action_counts.most_common():
             action_name = action_map.get(action_idx, "Invalid Action")
             writer.writerow([action_name, count])

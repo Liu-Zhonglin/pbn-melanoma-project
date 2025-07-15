@@ -1,0 +1,10 @@
+--- In Silico Knockout Comparative Analysis Report ---
+
+Purpose: To validate the RL agent's finding that JUN is the optimal control target.
+This report compares phenotype probabilities in the Wild-Type (WT) model vs. single-gene Knockout (KO) models.
+
+Phenotype                      | WildType        | JUN_KO          | LOXL2_KO        | RELA_KO         | NRAS_KO         | MAPK3_KO        | PIK3CB_KO      
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Responder Phenotype            | 0.4552          | 0.4523          | 0.4455          | 0.0020          | 0.0026          | 0.9803          | 0.0147         
+Dominant Non Responder         | 0.3658          | 0.3714          | 0.3863          | 0.9950          | 0.9939          | 0.0119          | 0.9833         
+AXL Driven Non Responder       | 0.0014          | 0.0014          | 0.0014          | 0.0010          | 0.0015          | 0.0020          | 0.0010         

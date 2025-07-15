@@ -1,8 +1,0 @@
---- Final Steady-State Distribution Results ---
-
-Phenotype                      | Responder Prob.      | Non-Responder Prob. 
----------------------------------------------------------------------------
-Dominant Non Responder         | 0.000038             | 0.372224            
-Responder Phenotype            | 0.008222             | 0.452094            
-WNT Driven Non Responder       | 0.988660             | 0.085890            
-AXL Driven Non Responder       | 0.000025             | 0.001332            
