@@ -44,7 +44,8 @@ Innate resistance to anti-PD-1 immunotherapy is a major challenge in metastatic 
 ## Folder Structure
 - **Data_Preprocessing/**: Input data and scripts for normalization and annotation.  
   *RNA-seq data can be downloaded from GEO accession [GSE78220](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78220).*
-- **PKN&Binarization/**: Prior knowledge network assembly and gene binarization scripts.
+- **PKN&Binarization/**: Prior knowledge network (PKN) assembly and gene binarization scripts.  
+  The PKN is derived from the KEGG pathway **PD-L1 expression and PD-1 checkpoint pathway in cancer - Homo sapiens (human)** ([hsa05235](https://www.genome.jp/dbget-bin/www_bget?pathway:hsa05235)).
 - **PBN Construction/**: Data-driven PBN inference and network logic selection.
 - **Mechanistic_Analysis/**: Attractor and rewiring analysis, phenotype decoding, and results.  
 - **Optimal_Control/**: RL training, SHAP/XAI analysis, robust intervention studies.
