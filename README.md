@@ -1,4 +1,4 @@
-# Optimal Temporal Control of Melanoma Immunotherapy Resistance
+# PBN-RL-XAI Pipeline for Discovering Temporal Intervention Strategies in Melanoma Immunotherapy Resistance
 
 This repository contains the complete source code, models, and reproducible analysis pipelines for  
 **"A PBN-RL-XAI Framework for Discovering a 'Hit-and-Run' Therapeutic Strategy in Melanoma"**  
