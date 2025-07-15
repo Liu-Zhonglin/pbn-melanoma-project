@@ -27,7 +27,7 @@ Innate resistance to anti-PD-1 immunotherapy is a major challenge in metastatic 
 
 - **Network Dynamics & Attractor Analysis:**  
   - Scripts and tools to analyze attractor landscapes and regulatory rewiring that underpins resistance.
-  - **Note:** The [optPBN toolbox](https://github.com/OptPBN/optPBN) (Matlab) is required for attractor analysis.
+  - **Note:** The [optPBN toolbox](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098001) (Matlab) is required for attractor analysis.
 
 - **RL-Based Optimal Control:**  
   - RL training pipeline (using `gym-PBN-stac` and `stable-baselines3`) for discovering policies that transition the network from resistant to sensitive phenotypes.
