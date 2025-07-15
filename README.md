@@ -48,27 +48,16 @@ Innate resistance to anti-PD-1 immunotherapy is a major challenge in metastatic 
 - **PBN Construction/**: Data-driven PBN inference and network logic selection.
 - **Mechanistic_Analysis/**: Attractor and rewiring analysis, phenotype decoding, and results.  
 - **Optimal_Control/**: RL training, SHAP/XAI analysis, robust intervention studies.
-- **figures/**: All figures for publication and exploration.
-- **requirements.txt**: Python dependencies for RL and XAI scripts.
+
 
 ---
 
-## Data Availability
 
-- **RNA-seq data:**  
-  All analyses are based on the dataset from Hugo et al., Cell 2016, available at GEO accession [GSE78220](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78220).
-
----
 
 ## Environment and Dependencies
 
 - **Python 3.9+**
 - **Matlab** (for optPBN attractor analysis)
 - **R** (for some preprocessing and network inference scripts)
-- See `requirements.txt` for all Python dependencies, including:
-    - `gymnasium`
-    - `stable-baselines3[extra]`
-    - `gym-PBN-stac`
-    - `shap`
-    - `scikit-learn`, `numpy`, `pandas`, `matplotlib`, `seaborn`, etc.
+
 
