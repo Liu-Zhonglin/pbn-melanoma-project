@@ -1,8 +1,7 @@
 # PBN-RL-XAI Pipeline for Discovering Temporal Intervention Strategies in Melanoma Immunotherapy Resistance
 
 This repository contains the complete source code, models, and reproducible analysis pipelines for  
-**"A PBN-RL-XAI Framework for Discovering a 'Hit-and-Run' Therapeutic Strategy in Melanoma"**  
-([arXiv:2507.10136](https://arxiv.org/abs/2507.10136)), submitted to IEEE BIBM 2025.
+**"A PBN-RL-XAI Framework for Discovering a 'Hit-and-Run' Therapeutic Strategy in Melanoma"**, submitted to IEEE BIBM 2025.
 
 ---
 
